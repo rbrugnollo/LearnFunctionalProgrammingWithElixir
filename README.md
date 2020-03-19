@@ -9,7 +9,7 @@
 `$ iex`  
 *(Press Ctrl + C twice to exit)*
 
-- Execute script file
+- Execute script file  
 `$ elixir hello_world.exs`
 
 - File Extensions  
@@ -32,5 +32,25 @@ Instead of libraries that offer mechanisms to help lock and sync the changes, fu
 #### Moving to Functional Programming
 
 In FP, **functions** are the basic building blocks, values are **immutable**, and the code is **declarative**.
+
+### Working with Immutable Data
+
+In FP, all values you create are *immutable*, no matter the operation we apply to it:
+
+
+```
+list = [1, 2, 3, 4]
+# => [1, 2, 3, 4]
+
+List.delete_at(list, -1)
+# => [4]
+
+list ++ [1]
+# => [1, 2, 3, 4, 1]
+
+IO.inspect list
+# => [1, 2, 3, 4]
+```
+
 
 
