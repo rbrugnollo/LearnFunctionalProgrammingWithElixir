@@ -105,3 +105,82 @@ title
 - Generates less and simpler code
 - Less code = fewer bugs
 - *what's necessary to solve a problem* instead of *how to solve a problem*( imperative)
+
+## Chapter 2 - Working with Variables and Functions
+- Values are anything that can represent data: Numbers, Strings, Fuctions, Maps and etc..
+- Operators compute values and generate a result: +, *, -...
+- *Literals* represent values that humans can easily understand.
+- Elixir generates result for any expression: 
+```
+iex> a = 2
+2
+```
+- It's not possible to add text and a number:
+```
+iex> "2" + 2
+(ArithmeticError) ...
+```
+
+### Common Types:
+
+|Type|Useful for|Examples|
+|---------|---------|---------|
+|string|Text|"Hello, World"|
+|integer|Numbers|10 20 -2|
+|float|Real numbers|10.8 -1.45|
+|boolean|Logical operators|true, false|
+|atom|Identifiers|:ok, :error, :exit|
+|tuple|Building collections of known sizes|{:ok, "Hello"} {1,2,3}|
+|list|Building collections of unknown sizes|[1,2] ["a", "b"]|
+|map|Looking up a value in a dictionary by key|%{id: 123, name: "Anna"} %{12 => "User"}|
+|nil|NULL|nil|
+
+### Common Operators
+
+|Operator|Useful for|Examples|
+|---------|---------|---------|
+|+|Adding numbers|1 + 2, 1.5 + 2|
+|-|Substracting numbers|1-2, 1.5-2|
+|/|Dividing numbers|10/2|
+|\*|Multipling numbers|10\*2.5|
+|==|Checking if equal|1 == 1.0|
+|!=|Checking if not equal|"1"!=1|
+|<|Less than|1<2|
+|>|Greater than|2>1|
+|++|Concatenating two lists|[1,2] ++ [3,4]|
+|<>|Concatenating tow strings or binaries|"Hello, " <> "World!"|
+
+### Creating Logical Expressions
+- **and**, **or**, **not** are made to work with Boolean values, 
+```
+iex> true and true
+true
+
+iex> true or false
+true
+
+iex> not true
+false
+
+iex> 1 and true
+(BadBooleanError)
+
+iex> true and 1
+true
+(right side part won't be computed)
+```
+- **&&**, **||**, **!** accept falsy(*nil and false*) or truthy(*anything else*) values and returns a value based on the operator we use
+```
+iex> nil && 1
+nil
+
+iex> true && "Hello, World!"
+"Hello, World!"
+
+iex> nil || 1
+1
+
+iex> !true
+false
+```
+
