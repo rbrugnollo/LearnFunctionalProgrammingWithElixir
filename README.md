@@ -149,6 +149,7 @@ iex> "2" + 2
 |>|Greater than|2>1|
 |++|Concatenating two lists|[1,2] ++ [3,4]|
 |<>|Concatenating tow strings or binaries|"Hello, " <> "World!"|
+|"#{}"|String interpolation|"Hello, #{name}!"|
 
 ### Creating Logical Expressions
 - **and**, **or**, **not** are made to work with Boolean values, 
@@ -198,3 +199,44 @@ iex> product_price = 11.5
 iex> total_cost = product_price * quantity
 115.0
 ```
+
+### Anonymous Functions
+- Functions receive input, computes, and outputs the last expression
+- Good practice to keep param number below 5
+- Must be bound to a variable to be reused
+- Also known as *lambdas*
+- func = fn param_1, p_2 -> *body* end
+- func.("param", 2)
+- func = fn -> *body* end
+- func.()
+
+ ```
+iex> hello = fn name -> "Hello, " <> name <> "!" end
+iex> hello.("Ana")
+"Hello, Ana!"
+ ```
+### Functions as First-Class Citizens
+- Functions are values of type *function*
+```
+iex> flat_fee = fn _ -> 5 end
+iex> full_price = fn price, fee -> price + fee.(price) end
+iex> full_price.(10, flat_fee)
+15
+ ```
+
+### Sharing Values Without Using Arguments
+- Use *closures*, as they have access to var values both inside and outside of the code block
+- Closures "remember" all the free vars from when they were created 
+- Scope is a part of a program (code block)
+- Lexical scope is related to the visibility of the vars where they were defined
+```
+iex> answer = 42
+iex> make_answer = fn -> other_answer = 88 + answer end 
+iex> make_answer.()
+50
+iex> other_answer
+*** (Error)
+iex> answer = 0
+iex> make_answer.()
+50
+ ```
