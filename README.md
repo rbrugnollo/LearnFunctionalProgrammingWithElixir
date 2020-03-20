@@ -1,5 +1,20 @@
 # Learn Functional Programming with Elixir
 
+- [Learn Functional Programming with Elixir](#learn-functional-programming-with-elixir)
+  * [Running Code](#running-code)
+  * [Chapter 1 - Thinking Functionally](#chapter-1---thinking-functionally)
+    + [Why Functional?](#why-functional-)
+      - [The limitations of Imperative Languages](#the-limitations-of-imperative-languages)
+      - [Moving to Functional Programming](#moving-to-functional-programming)
+    + [Working with Immutable Data](#working-with-immutable-data)
+    + [Building Programs with Functions](#building-programs-with-functions)
+        * [Pure functions](#pure-functions)
+        * [Impure functions](#impure-functions)
+      - [Transforming Values](#transforming-values)
+      - [Declaring Code](#declaring-code)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 ## Running Code
 
 - Get Elixir version  
