@@ -52,5 +52,43 @@ IO.inspect list
 # => [1, 2, 3, 4]
 ```
 
+### Building Programs with Functions
+
+- Functions are the primary tools for building a program
+- They are usually short and expressive
+- We combine multiple little functions to create a larger program
+- Values are passed explicitly between functions
+- Functions can be arguments and results
+
+##### Pure functions
+- Values are immutable
+- The result is affected only by the function's arguments
+- No side effects beyond the value returned
+
+E.g.:
+
+```
+add2 = fn (n) -> n + 2 end
+
+add2.(2)
+# => 4
+```
+
+##### Impure functions
+More complex, unpredictable results and with side effects *(Chapter 7)*
 
 
+#### Transforming Values
+Elixir's focus is on the data transformation flow, and the pipe ( |> ) operator can be used to combine multiples functions' calls and results, where the result of each expression will be passed as a value to the next function.
+
+```
+title 
+|> String.split
+|> capitalize_all
+|> join_with_whitespace
+```
+
+#### Declaring Code
+- Generates less and simpler code
+- Less code = fewer bugs
+- *what's necessary to solve a problem* instead of *how to solve a problem*( imperative)
