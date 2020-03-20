@@ -169,7 +169,7 @@ iex> true and 1
 true
 (right side part won't be computed)
 ```
-- **&&**, **||**, **!** accept falsy(*nil and false*) or truthy(*anything else*) values and returns a value based on the operator we use
+- **&&**, **||**, **!** accept falsy(*nil and false*) or truthy(*anything else*) values and return a value based on the operator we use
 ```
 iex> nil && 1
 nil
@@ -184,3 +184,17 @@ iex> !true
 false
 ```
 
+### Variables
+- Explicit names
+- snake_case format
+
+```
+iex> quantity = 10
+10
+
+iex> product_price = 11.5
+11.5
+
+iex> total_cost = product_price * quantity
+115.0
+```
