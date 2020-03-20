@@ -65,8 +65,6 @@ IO.inspect list
 - The result is affected only by the function's arguments
 - No side effects beyond the value returned
 
-E.g.:
-
 ```
 add2 = fn (n) -> n + 2 end
 
