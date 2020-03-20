@@ -17,7 +17,7 @@
 **.exs** for script files
 
 ## Chapter 1 - Thinking Functionally
-*The rules that govern typipcal everyday programming are changing. That doesn't happen often. When it does, something important is going on.*
+*The rules that govern typical everyday programming are changing. That doesn't happen often. When it does, something important is going on.*
 
 ### Why Functional?
 
