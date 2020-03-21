@@ -53,7 +53,7 @@ In FP, **functions** are the basic building blocks, values are **immutable**, an
 In FP, all values you create are *immutable*, no matter the operation we apply to it:
 
 
-```
+```elixir
 list = [1, 2, 3, 4]
 # => [1, 2, 3, 4]
 
@@ -80,7 +80,7 @@ IO.inspect list
 - The result is affected only by the function's arguments
 - No side effects beyond the value returned
 
-```
+```elixir
 add2 = fn (n) -> n + 2 end
 
 add2.(2)
@@ -94,7 +94,7 @@ More complex, unpredictable results and with side effects *(Chapter 7)*
 #### Transforming Values
 Elixir's focus is on the data transformation flow, and the pipe ( |> ) operator can be used to combine multiples functions' calls and results, where the result of each expression will be passed as a value to the next function.
 
-```
+```elixir
 title 
 |> String.split
 |> capitalize_all
@@ -111,12 +111,12 @@ title
 - Operators compute values and generate a result: +, *, -...
 - *Literals* represent values that humans can easily understand.
 - Elixir generates result for any expression: 
-```
+```elixir
 iex> a = 2
 2
 ```
 - It's not possible to add text and a number:
-```
+```elixir
 iex> "2" + 2
 (ArithmeticError) ...
 ```
@@ -153,7 +153,7 @@ iex> "2" + 2
 
 ### Creating Logical Expressions
 - **and**, **or**, **not** are made to work with Boolean values, 
-```
+```elixir
 iex> true and true
 true
 
@@ -171,7 +171,7 @@ true
 (right side part won't be computed)
 ```
 - **&&**, **||**, **!** accept falsy(*nil and false*) or truthy(*anything else*) values and return a value based on the operator we use
-```
+```elixir
 iex> nil && 1
 nil
 
@@ -189,7 +189,7 @@ false
 - Explicit names
 - snake_case format
 
-```
+```elixir
 iex> quantity = 10
 10
 
@@ -210,14 +210,14 @@ iex> total_cost = product_price * quantity
 - func = fn -> *body* end
 - func.()
 
- ```
+ ```elixir
 iex> hello = fn name -> "Hello, " <> name <> "!" end
 iex> hello.("Ana")
 "Hello, Ana!"
  ```
 ### Functions as First-Class Citizens
 - Functions are values of type *function*
-```
+```elixir
 iex> flat_fee = fn _ -> 5 end
 iex> full_price = fn price, fee -> price + fee.(price) end
 iex> full_price.(10, flat_fee)
@@ -229,7 +229,7 @@ iex> full_price.(10, flat_fee)
 - Closures "remember" all the free vars from when they were created 
 - Scope is a part of a program (code block)
 - Lexical scope is related to the visibility of the vars where they were defined
-```
+```elixir
 iex> answer = 42
 iex> make_answer = fn -> other_answer = 88 + answer end 
 iex> make_answer.()
@@ -240,3 +240,38 @@ iex> answer = 0
 iex> make_answer.()
 50
  ```
+
+### Naming Functions
+- *named functions* are defined inside *modules*
+- *atom* or *aliases* can be used to name a function
+- Alias is any word that starts with a capital letter ( String )
+- During compile time, aliases become atoms (String == :"Elixir.String" )
+- To call a function inside a module, use Module.function()
+- It's possible to omit the parenthesis when calling a function ( `IO.puts "Hello"` )
+
+### Elixir's Named Functions
+- [Full Docs](https://hexdocs.pm/elixir/)
+- Kernel module doesn't need the module name when called ``div(1,2)``
+- All other modules do ``String.capitalize("HellO THerE")``
+
+### Creating Modules and Functions
+- use *snake_case.ex* for module file
+- use *lib/namespace/module.ex* for module path 
+- use *CamelCase*, *Namespace.Module* for module name
+- only one module per file
+- use *snake_case* from function name
+- one line functions can be defined as `def func_name(), do: expression`
+```elixir
+defmodule Ecommerce.Checkout do
+    def total_cost(price, tax_rate) do
+        price * (tax_rate + 1)
+    end
+    def total_cost_single(price, tax_rate), do: price * tax_rate + 1
+end
+```
+- to compile and use a file inside iex, use:
+```elixir
+iex> c("lib/ecommerce/checkout.ex")
+iex> Ecommerce.Checkout.total_cost(100, 0.2)
+120.0
+```
