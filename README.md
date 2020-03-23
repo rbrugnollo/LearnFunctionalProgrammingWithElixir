@@ -276,7 +276,7 @@ iex> make_answer.()
 - use *lib/namespace/module.ex* for module path 
 - use *CamelCase*, *Namespace.Module* for module name
 - only one module per file
-- use *snake_case* from function name
+- use *snake_case* for function name
 - one line functions can be defined as `def func_name(), do: expression`
 ```elixir
 defmodule Ecommerce.Checkout do
