@@ -12,6 +12,19 @@
         * [Impure functions](#impure-functions)
       - [Transforming Values](#transforming-values)
       - [Declaring Code](#declaring-code)
+  * [Chapter 2 - Working with Variables and Functions](#chapter-2---working-with-variables-and-functions)
+    + [Common Types:](#common-types-)
+    + [Common Operators](#common-operators)
+    + [Creating Logical Expressions](#creating-logical-expressions)
+    + [Variables](#variables)
+    + [Anonymous Functions](#anonymous-functions)
+    + [Functions as First-Class Citizens](#functions-as-first-class-citizens)
+    + [Sharing Values Without Using Arguments](#sharing-values-without-using-arguments)
+    + [Naming Functions](#naming-functions)
+    + [Elixir's Named Functions](#elixir-s-named-functions)
+    + [Creating Modules and Functions](#creating-modules-and-functions)
+    + [Importing Named Functions](#importing-named-functions)
+    + [Using Named Functions as Values](#using-named-functions-as-values)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
