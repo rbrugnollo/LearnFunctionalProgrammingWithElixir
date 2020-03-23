@@ -207,8 +207,12 @@ iex> total_cost = product_price * quantity
 - Also known as *lambdas*
 - func = fn param_1, p_2 -> *body* end
 - func.("param", 2)
-- func = fn -> *body* end
-- func.()
+- func_2 = fn -> *body* end
+- func_2.()
+- func_3 = &(&1 * &2)
+- func_3.(10, 2)
+- func_4 = & &1 * &2
+- func_4.(10, 2)
 
  ```elixir
 iex> hello = fn name -> "Hello, " <> name <> "!" end
@@ -274,4 +278,18 @@ end
 iex> c("lib/ecommerce/checkout.ex")
 iex> Ecommerce.Checkout.total_cost(100, 0.2)
 120.0
+```
+
+### Importing Named Functions
+- modules attributes can be defined with *@* and are used as annotations, temporary storage, or constants `@file_name "task_list.md"`
+- use *import* directive to import modules' functions `import File, only: [write: 3, read: 1]`
+- *import* directive should only be used when function names can't cause confusion
+
+### Using Named Functions as Values
+- use the *&function/arity* operator to bind a named function to a variable 
+
+```elixir
+iex> upcase = &String.upcase/1
+iex> upcase.("oi")
+OI
 ```
