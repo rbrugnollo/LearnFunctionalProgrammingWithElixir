@@ -459,6 +459,80 @@ iex> s_value
 iex> strength_value = 16
 iex> %{strength: ^strength_value} = abilities (use value of ^strength_value)
 ```
+#### Maps vs. Keyword Lists
+- Keyword List is a list of two-element tuples
+- It allows duplicate dkeys
+- Keys must be atoms
 
+```elixir
+iex> [b, c] = [a: 1, a: 12]
+iex> b
+{:a, 1}
+```
 
+```elixir
+x = %{a: 1, a:12} # result in {a: 12}
+x = [a: 1, a: 12] # OK
+x = [{:a, 1}, {:a, 12}] # same from above
+x = %{1=> :a, 2 => :b} # OK
+x = [1 => :a, 2 => :b] # Syntax error
+```
 
+- The syntax is similar, but their limitations make them handy for different cases
+
+#### Matching Structs
+- Structs are extensions of mapping structures
+- Useful for representing consistent structures
+- Similar to a class with props
+- Pattern Matching works like it does with Maps
+- *~D* is a date sigil
+- The name of the struct can be used to match only the struct
+
+```elixir
+iex> date = ~D[2018-01-01]
+iex> %{year: year} = date
+iex> year
+2018
+
+iex> date = ~D[2018-01-01]
+iex> %Date{year: year} = date
+iex> year
+2018
+
+iex> date = %{year: 2018}
+iex> %Date{year: year} = date
+** MatchError
+```
+
+##### Sigils
+- Sigils are shortcuts to create values with a simplified text representation
+```elixir
+iex> ~D[2018-01-01]
+~D[2018-01-01]
+
+iex> ~w(chocoalte jelly mint)
+["chocolate", "jelly", "mint"]
+```
+
+### Control Flow with Functions
+- Pattern Matching and Functions are the fundamental tools we use to control the program flow *see number_compare.ex*
+- Arguments from functions are pattern-matching expressions
+- To define a private function inside a module, use defp
+
+#### Applying Default Values for Functions
+- Use \\\\ to apply a default value to a named function
+- Elixir will create multiple functions automatically on compile time
+- In Elixir, functions have fixed arity
+- Arity is part of the function's unique name
+
+```elixir
+defmodule Checkout do
+    # &total_cost/1 and &total_cost/2 are created
+    def total_cost(price, quantity \\ 10), do: price * quantity
+end
+
+iex> Checkout.total_cost(12)
+120
+iex> Checkout.total_cost(12, 5)
+60
+```
