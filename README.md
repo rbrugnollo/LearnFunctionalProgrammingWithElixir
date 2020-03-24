@@ -306,3 +306,159 @@ iex> upcase = &String.upcase/1
 iex> upcase.("oi")
 OI
 ```
+
+## Chapter 3 - Using Pattern Matching to Control the Program Flow
+
+Elixir's pattern match shapes everything you program.
+
+### Making Two things Match
+
+```elixir
+iex> 1 = 1
+1
+
+iex> 2 = 1
+** (MatchError)
+
+iex> x = 1 (bind and match)
+1
+iex> 1 = x
+1
+iex> 2 = x
+** (MatchError)
+iex> x = 2 (rebind and match)
+2
+iex> ^x = 2 (pin operator avoids rebind and uses variable value)
+2
+iex> ^x = 1 (avoids rebind and uses variable value)
+** (MatchError)
+```
+- You can use the _ wildcard to ignore parts of a Pattern Matching
+
+### Unpacking Values from Various Data Types
+Pattern matching is useful for extracting parts of values to variables in a process called *destructing*.
+
+#### Matching Parts of a String
+
+```elixir
+iex> "Authentication: " <> credentials = "Authentication: Basic dxYz123"
+"Authentication: Basic dxYz123"
+
+iex> credentials
+"Basic dxYz123"
+```
+
+- It's not possible to use a variable on the left side of the <> operator
+```elixir
+iex> first_name <> "Doe" = "John Doe"
+** (CompileError)
+```
+
+#### Matching Tuples
+Tuples are often used to pass a signal with values
+- We can match and bind multiple items of a tuple
+```elixir
+iex> {a, b, c} = {4, 5, 6}
+{4, 5, 6}
+
+iex> b
+5
+```
+- Tuples are useful for signaling successess and failures in a function's return
+```elixir
+iex> my_function = fn -> {:ok, 42} end
+iex> {:ok, answer} = my_function.()
+iex> answer
+42
+iex> {:error, reason} = my_function.()
+** (MatchError)
+```
+
+#### Matching Lists
+- In Elixir, lists are *linked lists*
+
+```elixir
+iex> [a, a, a] = [1, 1, 1]
+[1, 1, 1]
+iex> [a, a, a] = [1, 2, 1]
+** (MatchError)
+iex> [a, b, a] = [1, 2, 1]
+[1, 2, 1]
+iex> [a, b, 1] = [1, 2, 1]
+[1, 2, 1]
+iex> [_, b, _] = [1, 2, 1]
+[1, 2, 1]
+```
+-Using the | operator to split arrays
+```elixir
+iex> [head | tail] = [1,2,3,4]
+iex> head
+1
+iex> tail
+[2,3,4]
+```
+```elixir
+iex> [a, b | tail] = [1,2,3,4]
+iex> a
+1
+iex> b
+1
+iex> tail
+[3,4]
+```
+```elixir
+iex> [head | tail] = [1]
+iex> head
+1
+iex> tail
+[]
+```
+```elixir
+iex> [head | tail] = []
+** MatchError
+```
+
+#### Matching Maps
+Maps are data types structured in key/value pairs
+```elixir
+iex> user_signup = %{email: "johndoe@email.com", password: "1234"}
+```
+The key is a atom, if you need to use other values as key you should use =>
+```elixir
+iex> sales = %{"2017/01"=> 200, "2017/02"=> 250}
+```
+It's possible to create nested structures
+```elixir
+%{
+  name: "John Doe",
+  programming_languages: ["Ruby", "Python", "Java"],
+  location: %{city: "New York", country:"US"}
+}
+```
+
+- Pattern Match and bind to variable
+
+```elixir
+iex> abilities = %{strength: 16, intelligence: 10}
+
+iex> %{strength: s_value} = abilities
+iex> s_value
+16
+
+iex> %{wisdom: w_value} = abilities
+** MatchError
+
+iex> %{strength: 16, intelligence: i_value} = abilities
+iex> i_value
+10
+
+iex> %{strength: s_value = 16} = abilities (check and bind)
+iex> s_value
+16
+
+iex> strength_value = 16
+iex> %{strength: ^strength_value} = abilities (use value of ^strength_value)
+```
+
+
+
