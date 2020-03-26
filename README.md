@@ -536,3 +536,22 @@ iex> Checkout.total_cost(12)
 iex> Checkout.total_cost(12, 5)
 60
 ```
+
+#### Expanding Control with Guard Clauses
+- They permit us to add Boolean expression in our functions
+- Help create better function signatures
+- Can be created by using the *when* keyword after params
+- Possible to use guards on *named* and *annonymous* *functions*
+
+```elixir
+def greater(number, other_number) when number >= other_number, do: number
+def greater(_, other_number), do: other_number
+
+var_greater = fn
+    number, other_number when number >= other_number -> number
+    _, other_number -> other_number
+end
+```
+
+- Macro functions can be easily created with the *defguard* directive
+- When macro is used, we need to use the directive *require*
