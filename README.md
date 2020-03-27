@@ -555,3 +555,58 @@ end
 
 - Macro functions can be easily created with the *defguard* directive
 - When macro is used, we need to use the directive *require*
+
+
+### Elixir Control-Flow Structures
+- Function clauses are usually used to control the flow of the program
+- Elixir built-in control-flow structures like *case, cond, if and unless* can also be used
+
+
+#### Case: Control with Pattern Matching
+- Useful when we want to check an expression with multiple pattern matching clauses
+- Useful with functions that may have unexpected effect
+- It's possible to use guards on the clauses
+- When a clause is matched, it'll execute the code and return the last expression
+- if no clause is matched, an error is raised
+```elixir
+case Boolean expression do
+    {:ok, value} -> value
+    :error -> IO.puts("Error")
+end
+```
+
+#### Cond: Control with Logical Expressions
+- Useful we want to check variables in logical expressions
+- Structure similar to *case*
+- When a condition is *truthy*, execute related code
+- if no condition is *truthy*, raise error
+
+```elixir
+result = cond do
+    age < 12 -> "kid"
+    age <= 18 -> "Teen"
+```
+
+#### If: Taking a look at our old friend
+- Useful when you want to execute a command based on a *truthy* expression
+- *unless* can be used as *if not*
+- else block is optional, if not given, return *nil*
+```elixir
+def greater_if(number, other_number) do
+    if number >= other_number do
+        number
+    else
+        other_number
+    end
+end
+
+def greater_unless(number, other_number) do
+    unless number < other_number do
+        number
+    else
+        other_number
+    end
+end
+
+result = if(number >= other_number, do: number, else: other_number)
+```
