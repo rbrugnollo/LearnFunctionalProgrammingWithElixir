@@ -610,3 +610,109 @@ end
 
 result = if(number >= other_number, do: number, else: other_number)
 ```
+
+
+## Chapter 4 - Diving into Recursion
+- While we use for and while loops on imperative languages, we have recursion in FP
+
+### Surrounded by Boundaries
+- A *bounded* recursion have an end
+- Most common type
+- Number of iterations is directly associated with the arguments
+- Good practice: Declare the *boundary clause* first
+```elixir
+defmodule Sum do
+    def up_to(0), do: 0
+    def up_to(n), do: n + up_to(n -1)
+end
+
+iex> Sum.up_to(3) #will call the function n+1 times
+6
+```
+
+#### Navigating Through Lists
+- Use syntax [head | tail] to navigate through lists using recursion
+- Can iterate through any data structure
+
+```elixir
+defmodule Math do
+    def sum([]), do: 0
+    def sum([head | tail]), do: head + sum(tail)
+end
+
+iex> Math.sum([5,2,3])
+10
+
+iex> Math.sum([])
+0
+```
+
+#### Transforming Lists
+- Transforming lists requires repetitive steps
+- [head | tail] is useful for destructuring and constructing new lists
+- [|] to prepend is faster than ++
+```elixir
+iex> [:a | [:b, :c]]
+[:a, :b, :c]
+
+iex> [[:b, :c] | :a ]
+[:b, :c, :a]
+
+iex> [:a, :b, :c]
+[:a, :b, :c]
+```
+
+##### The Key-based Accessors
+```elixir
+iex> item = %{a: 1, b: 2}
+iex> item[:a]
+1
+iex> item.a
+1
+iex> item[:c]
+nil
+iex> item.c
+** KeyError
+```
+
+### Conquering Recursion
+#### Decrease and Conquer
+- Reduce a problem to its simplest form and start solving it incrementally
+- E.g: Factorial
+```elixir
+defmodule Factorial do
+    def of(0), do: 1
+    def of(n) when n > 0, do: n * of(n-1)
+end
+```
+
+#### Divide and Conquer
+- Separate the problem into two or more parts
+- Process independly and combine in the end
+- E.g: Sorting functions
+
+```elixir
+defmodule Sort do
+    def asc([]), do: []
+    def asc([a]), do: [a]
+    def asc(list) do
+        half_size = div(Enum.count(list), 2)
+        {list_a, list_b} = Enum.split(list, half_size)
+        merge(
+            asc(list_a),
+            asc(list_b)
+        )
+    end
+
+    defp merge([], list_b), do: list_b
+    defp merge(list_a, []), do: list_a
+    defp merge([head_a | tail_a], list_b = [head_b | _]) when head_a <= head_b do
+        [head_a, merge(tail_a, list_b)]
+    end
+    defp merge(list_a = [head_a | _], [head_b | tail_b]) when head_a > head_b do
+        [head_b, merge(list_a, tail_b)]
+    end
+end
+```
+
+#### Tail-Call Optimization
