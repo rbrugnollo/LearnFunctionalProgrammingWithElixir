@@ -716,3 +716,46 @@ end
 ```
 
 #### Tail-Call Optimization
+- Compiler reduces functions in memory without allocating more memory
+- Last expression of a function must be a function call
+- Common approach is to replace the use of the function result with an extra argument
+- Extra argument accumulates the results of each iteration
+- *body-recursive* functions are simpler to read and maintain, so they should be used when a low number of recursion is expected
+- *tail-recursive* functions should be used when a large number of iterations is expected
+
+Compare:
+```elixir
+defmodule Factorial do
+    def of(0), do: 1
+    def of(n) when n > 0, do: n * of(n -1) # will create stack
+end
+
+defmodule TailCallFactorial do
+    def of(n), do: fac_of(n, 1)
+    defp fac_of(0, acc), do: acc
+    defp fac_of(n, acc) when > 0, do: fac_of(n - 1, n * acc) # will use tail-recursive optmization
+end
+```
+
+### Functions without borders
+- *Unbounded* recursion is when we can't predict the number of repetition for a recursive function
+- For example: web crawler, directory navigator
+
+#### Making functions more predictable
+- Adding Boundaries
+- Avoiding Infinite Loops
+
+### Using Recursion with Anonymous Functions
+- Recursion with anonymous functions isn't straightforward and should avoided
+- It's necessary to wrap the function in another function to avoid nonexistent error
+```elixir
+iex> fact_gen = fn me ->
+    fn
+        0 -> 1
+        x when x > 0 -> x * me.(me).(x - 1) 
+    end
+end
+
+iex> factorial = fact_gen.(fact_gen)
+iex> factorial.(5)
+```
