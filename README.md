@@ -788,3 +788,54 @@ end
 iex> factorial = fact_gen.(fact_gen)
 iex> factorial.(5)
 ```
+## Chapter 5 - Using Higher-Order Functions
+- Higher-Order functions are those that take functions as arguments and/or return them.
+- Useful for hiding complexity and laborius functions
+- Receive functions as arguments as your receive any other arg
+```def each([], function), do: nil ```
+- Use functions as you use function values
+```function.()```
+- It's possible to send annonymous functions
+```masMyList.each([], fn item -> IO.puts item end)```
+- Value functions ```MyList.each([], my_function)```
+- Named functions ```MyList.each([], &String.capitalize/1)```
+- Operators as named functions ```MyList.reduce([], 0, &+/2)```
+- Operators as named functions ```Enum.sort([], &<=/2)```
+
+### Using the Enum Module
+- Works with maps, lists, tuples and any type that implements the  Enumerable protocol
+- Enum.each
+- Enum.map
+- Enum.reduce
+- Enum.filter
+- Enum.count
+- Enum.sort
+- Enum.sum
+- Enum.uniq
+- Enum.sort
+- Enum.join
+
+### Using Comprehensions
+- using *for*, enumerables can be easily iterated, mapped and filtered
+```elixir
+iex> for a <- ["dogs", "cats", "flowers"], do: String.upcase(a)
+["DOGS", "CATS", "FLOWERS"]
+```
+- each item of the list will be assigned to *a* 
+- it's possible to have more than one generator
+```elixir
+iex> for a <- ["Willy", "Anna"], b <- ["Math", "English"], do: {a, b}
+[{"Willy", "Math"}, {"Willy", "English"}, {"Anna", "Math"}, {"Anna", "English"}]
+```
+- we can filter by using pattern matching
+```elixir
+iex> parseds = for i <- ["10", "hot dogs", "20"], do: Integer.parse(i)
+[{10, ""}, :error, {20, ""}]
+iex> for {n, _} <- parseds, do: n
+[10, 20]
+```
+- we can also filter with an expression for truthy values
+```elixir
+iex> for n <- [1,2,3,4,5], n > 3, do: n
+[4,5]
+```
