@@ -839,3 +839,87 @@ iex> for {n, _} <- parseds, do: n
 iex> for n <- [1,2,3,4,5], n > 3, do: n
 [4,5]
 ```
+
+### Pipelining Your Functions
+- Used to execute many functions in sequence
+- Elixir doesn't have a built-in *compose* function like other functional languages, the alternative is to use *pipes*
+```elixir
+iex> first_letter_and_upcase = &(&1 |> String.first |> String.upcase)
+iex> first_letter_and_upcase.("works")
+"W"
+```
+- The result of each pipe expression will be passed as the  first argument of the next pipe
+- The result of the pipeline is the result of the last pipe
+- Pipes should be used for 2+ expressions for better readability
+
+### Be Lazy
+- Lazy operations provide alternative techniques of programming and creating efficient programs
+
+#### Delay the Function Call
+- Other FP languages have currying, Elixir has *partial application*
+- Partial application is used to postopone a function's execution
+- The function is wrapped in another function with a fixed value of any of the arguments
+- It's common to use the *function-capturing-syntax*
+
+```elixir
+defmodule WordBuilder do
+    def build(alphabet, positions) do
+        letters = Enum.map(positions, &(String.at(alphabet),&1))
+        Enum.join(letters)
+    end
+end
+```
+
+#### Working with the Infinite
+- In programming, infinite is something that's always expanding
+- E.g. Web Server waiting for calls, messaging broker handling events
+- *streams* type represents a flow of data that may not have an end
+- *Stream* module contains many functions to create and operate *streams*
+
+##### Range
+- Range literal is a stream `iex> range = 1..10`
+- It's a lazy collection, which are evaluated only when necessary `iex> Enum.each(range, &IO.puts/1)`
+
+##### Stream
+- We can represent a collection that is always expanding using *Stream.iterate/2*
+- The items of the stream will be evaluated dynamically, every time something asks for an item
+- Needs a starting value and an increment function
+```elixir
+    iex> i = Stream.iterate(1, fn prev -> prev + 1 end)`
+    iex> Enum.take(i, 5)
+    [1,2,3,4,5]
+```
+
+```elixir
+defmodule Factorial do
+    def of(0), do: 1
+    def of(n) when n > 0 do
+        Stream.iterate(1, &(&1+1))
+        Enum.take(n)
+        Enum.reduce(&(&1*&2))
+    end
+end
+```
+- Stream.cycle lets you create a list that will keep iterating through its items forever
+
+```elixir
+defmodule Halloween do
+    def give_candy(kids) do
+        ~w(chocolate jelly mint)
+        |> Stream.cycle
+        |> Enum.zip(kids)
+    end
+end
+
+iex> Halloween.give_candy(~w(Raff Jorge Anna Elza))
+[{"chocolate", "Raff"}, {"jelly", "Jorge"}, {"jelly", "Anna"}, {"chocolate", "Elza"} ....]
+```
+
+#### Pipelining Data Streams
+- Combine Elixir pipe and strems
+- Can be done in two ways: eager or lazy
+- Eager: each computation processes all items and send to next computation
+- Lazy: each computation processes a chunk of items and send partial results
+
+
+
