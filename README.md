@@ -921,5 +921,66 @@ iex> Halloween.give_candy(~w(Raff Jorge Anna Elza))
 - Eager: each computation processes all items and send to next computation
 - Lazy: each computation processes a chunk of items and send partial results
 
+## Chapter 5 - Designing Your Elixir Applications
+### Starting your project with Mix
+- Command-line interface (CLI)
+- Provides essentials for developing any Elixir application 
+- Helps creates and maintain projects (compile, debug, test, manage dependencies)
+- built-in Elixir
 
+#### Running the new Task
+- mix new creates the initial structure to code your application
+```elixir
+mix new project_name
+```
+- *mix test* will run all the tests on *test* folder
+- *iex -S mix* innitiates IEx with project compiled
+
+#### Create the Start Task
+- Mix tasks are mix commands like *mix new* and *mix test*
+- It's possible to  create our own tasks
+- Must be inside lib/mix/tasks
+
+
+### Designing Entities with Structs
+- Structs are used to express our application domains
+- We should define the on *lib\namespace\module.ex*
+- Module name should be *Namespace.Module*
+- Define struct using *defstruct* directive
+- Use *attribute_name: default_value* for each prop
+
+#### Alias
+- alias directive can be used to create module shortcuts
+`alias Mix.Shell.IO, as: Shell`
+
+### Using Protocols to Create Polymorphic Functions
+- *protocol* lets you create an interface that many data types can implement
+- interfaces leads to better codebase design
+- define protocol with *defprotocol*
+```elixir
+defprotocol Protocol do
+    def function(param)
+end
+```
+- implement with *defimpl*
+```elixir
+defimpl Protocol, for: ModuleThatImplements do
+    def function(param), do: param
+end
+```
+- if inside module, *for* is not needed
+```elixir
+def Module do
+    defimpl Protocol do
+        def fuction(param), do: param
+    end
+end
+```
+
+Conventions
+- if you own the struct, put the implementation in the same file as the struct
+- if you own the protocol and not the struct, put the implementation with the protocol
+- if you don't own anything, create a file with the protocol name and put the implementation there
+
+### Creating Module Behaviours
 
