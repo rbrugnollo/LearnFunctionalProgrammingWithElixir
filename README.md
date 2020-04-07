@@ -54,6 +54,26 @@
     + [Functions without borders](#functions-without-borders)
       - [Making functions more predictable](#making-functions-more-predictable)
     + [Using Recursion with Anonymous Functions](#using-recursion-with-anonymous-functions)
+  * [Chapter 5 - Using Higher-Order Functions](#chapter-5---using-higher-order-functions)
+    + [Using the Enum Module](#using-the-enum-module)
+    + [Using Comprehensions](#using-comprehensions)
+    + [Pipelining Your Functions](#pipelining-your-functions)
+    + [Be Lazy](#be-lazy)
+      - [Delay the Function Call](#delay-the-function-call)
+      - [Working with the Infinite](#working-with-the-infinite)
+        * [Range](#range)
+        * [Stream](#stream)
+      - [Pipelining Data Streams](#pipelining-data-streams)
+  * [Chapter 5 - Designing Your Elixir Applications](#chapter-5---designing-your-elixir-applications)
+    + [Starting your project with Mix](#starting-your-project-with-mix)
+      - [Running the new Task](#running-the-new-task)
+      - [Create the Start Task](#create-the-start-task)
+    + [Designing Entities with Structs](#designing-entities-with-structs)
+      - [Alias](#alias)
+    + [Using Protocols to Create Polymorphic Functions](#using-protocols-to-create-polymorphic-functions)
+    + [Creating Module Behaviours](#creating-module-behaviours)
+      - [Adding Type Specifications](#adding-type-specifications)
+      - [Battling Through to the Exit](#battling-through-to-the-exit)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
@@ -983,4 +1003,26 @@ Conventions
 - if you don't own anything, create a file with the protocol name and put the implementation there
 
 ### Creating Module Behaviours
+- *behavior* is a contract between a module and the client code
+- *Mix.Task* is a behaviour
+- *@callback* directive to define a function rule
+```elixir
+    @callback run(param1 :: any, param2 :: any) :: any
+```
+- *@behaviour* directive to say module follows a behaviour
+```elixir
+    @behaviour Namespace.CallbackModule
+```
 
+#### Adding Type Specifications
+- Notations that say what your functions expect and return
+- Good for static check and documentation
+- use `@type t` directive inside the module
+```elixir
+@type t :: %ModuleStruct{
+    prop: Type.t
+}
+```
+- Use Dialyzer to statically analyze the code
+
+#### Battling Through to the Exit

@@ -4,6 +4,11 @@ defmodule DungeonCrawl.Room.Action do
   defstruct label: nil,
             id: nil
 
+  @type t :: %Action{
+          label: String.t(),
+          id: atom
+        }
+
   def forward, do: %Action{id: :forward, label: "Move forward."}
   def rest, do: %Action{id: :rest, label: "Take a better look and rest."}
   def search, do: %Action{id: :search, label: "Search the room."}
