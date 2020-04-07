@@ -64,7 +64,7 @@
         * [Range](#range)
         * [Stream](#stream)
       - [Pipelining Data Streams](#pipelining-data-streams)
-  * [Chapter 5 - Designing Your Elixir Applications](#chapter-5---designing-your-elixir-applications)
+  * [Chapter 6 - Designing Your Elixir Applications](#chapter-6---designing-your-elixir-applications)
     + [Starting your project with Mix](#starting-your-project-with-mix)
       - [Running the new Task](#running-the-new-task)
       - [Create the Start Task](#create-the-start-task)
@@ -941,7 +941,7 @@ iex> Halloween.give_candy(~w(Raff Jorge Anna Elza))
 - Eager: each computation processes all items and send to next computation
 - Lazy: each computation processes a chunk of items and send partial results
 
-## Chapter 5 - Designing Your Elixir Applications
+## Chapter 6 - Designing Your Elixir Applications
 ### Starting your project with Mix
 - Command-line interface (CLI)
 - Provides essentials for developing any Elixir application 
@@ -964,7 +964,7 @@ mix new project_name
 
 ### Designing Entities with Structs
 - Structs are used to express our application domains
-- We should define the on *lib\namespace\module.ex*
+- We should define them on *lib\namespace\module.ex*
 - Module name should be *Namespace.Module*
 - Define struct using *defstruct* directive
 - Use *attribute_name: default_value* for each prop
@@ -1024,5 +1024,3 @@ Conventions
 }
 ```
 - Use Dialyzer to statically analyze the code
-
-#### Battling Through to the Exit
