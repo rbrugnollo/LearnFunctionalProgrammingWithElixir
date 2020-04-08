@@ -1024,3 +1024,31 @@ Conventions
 }
 ```
 - Use Dialyzer to statically analyze the code
+
+## Chapter 7 - Handling Impure Functions
+
+Impure Functions are those that can return different values from the same input.
+
+The main strategy for creating a healthy codebase is to identify and isolate the parts that can have unexpected results, and make them predictable.
+
+We'll discuss 4 strategies for this:
+- Conditional structures: *case*, *if*, etc...
+- Exception handling: *try* 
+- Error monads
+- Elixir's *with*: pattern maching + conditional
+ 
+### Pure vs Impure Functions
+- You shouldn't think pure is good and impure is evil, both are important to write an application
+- It's good practice to build more pure functions and isolating impure parts with proper handling
+
+#### Pure
+- Always return consistent output when the same input is given, and no side effects are produced
+- They can produce errors, but those are predictable
+
+#### Impure
+- May not return consistent output with the same input
+- May produce side effects
+- References values that aren't in the function's args
+- Interact with content outside of the program context (File IO, database, API, logs, user input, etc...)
+- If a functions calls an impure function, it becomes impure
+- 
