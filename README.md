@@ -1051,4 +1051,66 @@ We'll discuss 4 strategies for this:
 - References values that aren't in the function's args
 - Interact with content outside of the program context (File IO, database, API, logs, user input, etc...)
 - If a functions calls an impure function, it becomes impure
-- 
+
+### Trying, Rescuing, and Catching
+- Throwing values and/or raising errors is unusual in FP
+- Names from functions that raise errors end with !
+
+#### Try, Raise and Rescue
+- use *defexception* to define a exception struct
+- use *try* *rescue* to catch exceptions
+- throw exceptions with *raise Exception* 
+
+```elixir
+def checkout do
+    try do
+        {qty, _} = ask_number("Quantity?")
+        {price, _} = ask_number("Price?")
+        qty * price
+    rescue
+        MatchError -> "It's not a number"
+    end
+end
+```
+
+#### Try, Throw and Catch
+- Similar to *raise* and *rescue*
+- Doesn't mean error, it's possible to throw variables
+
+```elixir
+throw {:error, "Invalid option"}
+```
+
+```elixir
+def ask_for_option(options) do
+    try do 
+        options
+        |> display_options 
+        |> parse_answer 
+    catch {:error, message} ->
+        display_error(message)
+    end
+end
+```
+### Handling Impure Functions with the Error Monad
+- Error Monad helps combining functions that can result in an error
+- Clear sequence
+- Error handling at a unique point
+- A monad wraps a value with properties that give more information about the value (context)
+- Makes it possible to combine functions with values to make automatic decisions
+- Are not Elixir native, you must download a package from the internet
+
+### Using with
+- Makes it possible to combine multiple matching clauses
+- Should be used when there's a function pipeline that can result in an error
+
+```elixir
+def checkout() do
+    result = 
+        with {qty, _} <- ask_number("Qty?")
+             {price, _} <- ask_number("Price?"),
+            do: qty * price
+    
+    if result == :error, do: IO.puts("It's not a number"), else: result
+end
+```
